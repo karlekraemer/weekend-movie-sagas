@@ -53,6 +53,7 @@ const genres = (state = [], action) => {
 }
 
 // Create one store that all components can use
+    //one store to rule them all
 const storeInstance = createStore(
     combineReducers({
         movies,

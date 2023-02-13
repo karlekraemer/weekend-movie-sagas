@@ -14,6 +14,7 @@ import axios from 'axios';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+    //fetch genres 
 }
 
 function* fetchAllMovies() {
@@ -42,6 +43,17 @@ const movies = (state = [], action) => {
     }
 }
 
+// Store the movie selected by user
+    // is this necessary? Same as movies?
+const selectedMovie = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_SELECTED_MOVIE':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 // Used to store the movie genres
 const genres = (state = [], action) => {
     switch (action.type) {
@@ -52,12 +64,14 @@ const genres = (state = [], action) => {
     }
 }
 
+
 // Create one store that all components can use
     //one store to rule them all
 const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        // selectedMovie
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './MovieList.css'
-//import use history
+//import use history, axios
 import { useHistory } from 'react-router-dom';
+
 
 function MovieList() {
 
@@ -15,12 +16,21 @@ function MovieList() {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
-    //create an handleClick here to navigate us to /details when a movie poster is clicked
-    // will also fire off dispatches
-    const handleClick = (event) => {
-        // send us to details page
-        history.push('/details');
-        // dispatches
+    //create a handleClick here to navigate us to /details when a movie poster is clicked
+        // will also dispatch info of selected movie to the store
+    const handleClick = (movie) => {
+        console.log('in handleClick');
+
+        return (
+            // GET id of selected movie, store it in a variable in store
+            dispatch ({ type: 'FETCH_MOVIES', payload: movie.id }),
+
+            // GET genre of selected movie
+            
+            // send us to details page
+            history.push('/details')
+        );
+
     }
 
 
@@ -32,7 +42,7 @@ function MovieList() {
                     return (
                         <div key={movie.id} >
                             <h3>{movie.title}</h3>
-                            <img src={movie.poster} alt={movie.title} onClick={handleClick}/>
+                            <img src={movie.poster} alt={movie.title} onClick={ () => handleClick(movie)}/>
                         </div>
                     );
                 })}

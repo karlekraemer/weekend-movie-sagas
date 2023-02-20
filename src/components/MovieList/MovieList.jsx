@@ -14,7 +14,7 @@ function MovieList() {
     //movies store const
     const movies = useSelector(store => store.movies);
 
-    //useEffect on page load
+    //useEffect to FETCH_MOVIES on page load
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
@@ -26,10 +26,11 @@ function MovieList() {
 
         return (
             // GET id of selected movie, store it in a variable in store
-            dispatch ({ type: 'FETCH_MOVIES', payload: movie.id }),
+            dispatch ({ type: 'FETCH_SELECTED_MOVIE_DETAILS', payload: movie.id }),
 
             // GET genre of selected movie
-            
+            dispatch ({ type: 'FETCH_GENRES', payload: movie.id }),
+
             // send us to details page
             history.push('/details')
         );
@@ -52,7 +53,7 @@ function MovieList() {
             </section>
         </main>
 
-    );
+    ); //end movieList function
 }
 
 export default MovieList;

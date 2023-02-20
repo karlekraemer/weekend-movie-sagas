@@ -54,5 +54,18 @@ router.post('/', (req, res) => {
 })
 
 //will need to add GET router to pair the info of the selected movie
+router.get('/:id', (req, res) => {
+  console.log('get movie id: ', req.params.id);
+  const id = req.params.id;
+  const query = `SELECT * FROM "movies" WHERE "id" = $1`;
+  pool.query(query, [req.params.id])
+    .then( result => {
+      res.send(result.rows);
+    })
+    .catch(err => {
+      console.log('ERROR: Get selected movie data', err);
+      res.sendStatus(500)
+    })
+});
 
 module.exports = router;

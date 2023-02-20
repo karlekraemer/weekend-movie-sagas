@@ -31,9 +31,9 @@ function* fetchAllMovies() {
         console.log('get all error');
     }
         
-}
+} //end fetchAllMovies
 
-function* fetchGenres() {
+function* fetchGenres(action) {
     console.log('fetch genres function', action.payload); //working test
     const id = action.payload;
     //get user-clicked movie genre info from DB
@@ -43,9 +43,9 @@ function* fetchGenres() {
     } catch {
         console.log('fetch genres error');
     }
-}
+} //end fetchGenres
 
-function* fetchSelectedMovieDetails() {
+function* fetchSelectedMovieDetails(action) {
     console.log('fetch selected movie details', action.payload);
     const id = action.payload;
     //get user-clicked movie details info from DB
@@ -55,7 +55,7 @@ function* fetchSelectedMovieDetails() {
     } catch {
         console.log('fetch selectedMovieDetails error');
     }
-}
+} //end fetchSelectedMovieDetails
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();

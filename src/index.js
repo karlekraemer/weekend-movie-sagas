@@ -15,6 +15,9 @@ import axios from 'axios';
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     //fetch genres 
+    yield takeEvery('FETCH_GENRES', fetchGenres);
+    //fetch movie details 
+    yield takeEvery('FETCH_SELECTED_MOVIE_DETAILS', fetchSelectedMovieDetails);
 }
 
 function* fetchAllMovies() {
@@ -28,6 +31,30 @@ function* fetchAllMovies() {
         console.log('get all error');
     }
         
+}
+
+function* fetchGenres() {
+    console.log('fetch genres function', action.payload); //working test
+    const id = action.payload;
+    //get user-clicked movie genre info from DB
+    try {
+        const genres = yield axios.get(`api/genre/${id}`);
+        yield put({ type: 'SET_GENRES', payload: genres.data});
+    } catch {
+        console.log('fetch genres error');
+    }
+}
+
+function* fetchSelectedMovieDetails() {
+    console.log('fetch selected movie details', action.payload);
+    const id = action.payload;
+    //get user-clicked movie details info from DB
+    try {
+        const selectedMovie = yield axios.get(`api/movie/${id}`);
+        yield put({ type: 'SET_SELECTED_MOVIE_DETAILS', payload: selectedMovie.data});
+    } catch {
+        console.log('fetch selectedMovieDetails error');
+    }
 }
 
 // Create sagaMiddleware
@@ -44,10 +71,10 @@ const movies = (state = [], action) => {
 }
 
 // Store the movie selected by user
-    // is this necessary? Same as movies?
+    // is this necessary? Same as movies? --yes, need this to store selected data
 const selectedMovie = (state = [], action) => {
     switch (action.type) {
-        case 'SET_SELECTED_MOVIE':
+        case 'SET_SELECTED_MOVIE_DETAILS':
             return action.payload;
         default:
             return state;
@@ -71,7 +98,7 @@ const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
-        // selectedMovie
+        selectedMovie
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

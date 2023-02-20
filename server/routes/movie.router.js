@@ -53,4 +53,6 @@ router.post('/', (req, res) => {
   })
 })
 
+//will need to add GET router to pair the info of the selected movie
+
 module.exports = router;

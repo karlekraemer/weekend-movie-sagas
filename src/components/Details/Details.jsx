@@ -1,12 +1,12 @@
 import './Details.css';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Details () {
-
+    // genres store const
+    const genres = useSelector(store => store.genres);
     // history const
     const history = useHistory();
-
-    // GET request to display the selected movie info from the store
 
     
     return (

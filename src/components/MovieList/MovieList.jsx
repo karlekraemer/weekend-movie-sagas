@@ -9,9 +9,12 @@ function MovieList() {
 
     //use history const
     const history = useHistory();
+    //dispatch const
     const dispatch = useDispatch();
+    //movies store const
     const movies = useSelector(store => store.movies);
 
+    //useEffect on page load
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
